@@ -91,11 +91,11 @@ Update the `.env` file with the necessary database and HDFS configurations.
     --role Admin \
     --email admin@example.com
 3. **Run Airflow and HDFS**
-    - Airflow
+    - Airflow:
     ```bash
     airflow scheduler &
     airflow webserver --port 8080
 
-    - HDFS
+    - HDFS:
     ```bash
     Start-all.sh
