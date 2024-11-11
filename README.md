@@ -36,19 +36,7 @@ This project extracts data from a PostgreSQL database and stores it on HDFS in P
     pip install -r requirements.txt
     ```
 
-4. **Set up environment variables** for PostgreSQL and HDFS in `.env`:
-    ```ini
-    # .env
-    POSTGRES_HOST=<your_postgres_host>
-    POSTGRES_PORT=<your_postgres_port>
-    POSTGRES_DB=<your_database_name>
-    POSTGRES_USER=<your_username>
-    POSTGRES_PASSWORD=<your_password>
-    HDFS_NAMENODE_HOST=<your_hdfs_namenode_host>
-    HDFS_PORT=<your_hdfs_port>
-    ```
-
-5. **Configure Airflow** (if it’s not already set up):
+4. **Configure Airflow** (if it’s not already set up):
     - Initialize Airflow database:
       ```bash
       airflow db init
@@ -61,7 +49,18 @@ This project extracts data from a PostgreSQL database and stores it on HDFS in P
       ```bash
       airflow scheduler
       ```
-
+      
+<!-- 4. **Set up environment variables** for PostgreSQL and HDFS in `.env`:
+    ```ini
+    # .env
+    POSTGRES_HOST=<your_postgres_host>
+    POSTGRES_PORT=<your_postgres_port>
+    POSTGRES_DB=<your_database_name>
+    POSTGRES_USER=<your_username>
+    POSTGRES_PASSWORD=<your_password>
+    HDFS_NAMENODE_HOST=<your_hdfs_namenode_host>
+    HDFS_PORT=<your_hdfs_port>
+    ``` -->
 <!-- ## Project Structure
 
 project_folder/ 
