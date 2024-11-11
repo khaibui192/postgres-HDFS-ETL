@@ -95,7 +95,8 @@ Update the `.env` file with the necessary database and HDFS configurations.
     ```bash
     airflow scheduler &
     airflow webserver --port 8080
-
+    ```
     - HDFS:
     ```bash
     Start-all.sh
+    ```
