@@ -1,0 +1,119 @@
+config:
+- user: postgres
+  databases:
+    - db_name: dvdrental
+      job: get_data
+      source_name: a1
+      source_type: database
+      tbl_list:
+        # - table_name: dummydata
+        #   numPartitions: 40
+        #   lowerBound: 0
+        #   upperBound: max
+        #   partitionColumn: id
+        #   primaryKey_col: [id, id2] #list ???
+        #   lastUpdate_col: updated_time
+
+        # - table_name: data_nodate
+        #   numPartitions: 40
+        #   lowerBound: 0
+        #   upperBound: max
+        #   partitionColumn: id 
+        #   primaryKey_col: id
+        #   lastUpdate_col:
+        
+        - table_name: uuiddata
+          numPartitions:
+          lowerBound: 
+          upperBound:
+          partitionColumn:
+          primaryKey_col: id
+          lastUpdate_col:
+
+    # - db_name: dvdrental2
+    #   job: get_data
+    #   source_name: a1
+    #   source_type: database
+    #   tbl_list:
+    #     - table_name: dummydata
+    #       numPartitions: 40
+    #       lowerBound: 0
+    #       upperBound: 4000000
+    #       partitionColumn: id
+    #       primaryKey_col: id
+    #       lastUpdate_col: updated_time
+
+    #     - table_name: data_nodate
+    #       numPartitions: 40
+    #       lowerBound: 0
+    #       upperBound: max
+    #       partitionColumn: id
+    #       primaryKey_col: id
+    #       lastUpdate_col:
+
+# - user: mysql
+#   databases:
+#     - db_name: hello
+#       job: get_data
+#       source_name: a1
+#       source_type: database
+#       tbl_list:
+#         - table_name: dummydata
+#           numPartitions: 40
+#           lowerBound: 0
+#           upperBound: 4000000
+#           partitionColumn: id
+#           primaryKey_col: id
+#           lastUpdate_col: updated_time
+
+#         - table_name: data_nodate
+#           numPartitions: 40
+#           lowerBound: 0
+#           upperBound: max
+#           partitionColumn: id
+#           primaryKey_col: id
+#           lastUpdate_col:
+
+#     - db_name: alive
+#       job: get_data
+#       source_name: a1
+#       source_type: database
+#       tbl_list:
+#         - table_name: dummydata
+#           numPartitions: 40
+#           lowerBound: 0
+#           upperBound: 4000000
+#           partitionColumn: id
+#           primaryKey_col: id
+#           lastUpdate_col: updated_time
+
+#         - table_name: data_nodate
+#           numPartitions: 40
+#           lowerBound: 0
+#           upperBound: max
+#           partitionColumn: id
+#           primaryKey_col: id
+#           lastUpdate_col:
+
+# - user: mysql1
+#   databases:
+#     - db_name: hello
+#       job: get_data
+#       source_name: a1
+#       source_type: database
+#       tbl_list:
+#         - table_name: dummydata
+#           numPartitions: 40
+#           lowerBound: 0
+#           upperBound: 4000000
+#           partitionColumn: id
+#           primaryKey_col: id
+#           lastUpdate_col: updated_time
+
+#         - table_name: data_nodate
+#           numPartitions: 40
+#           lowerBound: 0
+#           upperBound: max
+#           partitionColumn: id
+#           primaryKey_col: id
+#           lastUpdate_col:

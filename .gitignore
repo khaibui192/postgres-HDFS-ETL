@@ -1,0 +1,23 @@
+# Airflow logs
+logs/
+*.log
+airflow-webserver.err
+airflow-webserver.out
+
+# Airflow database and PID files
+airflow.db
+*.pid
+*.monitor.pid
+
+# Configuration files
+airflow.cfg
+webserver_config.py
+
+# Virtual environment
+venv/
+
+# Else
+bin/
+include/
+lib/
+lib64/
