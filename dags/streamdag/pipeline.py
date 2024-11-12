@@ -9,7 +9,9 @@ from functools import partial
 from pyspark.sql.dataframe import DataFrame
 import json
 import uuid
-
+import threading
+import subprocess
+from streamdag.sparkstream import Streaming
 
 with open('dags/streamdag/config/env.yml', 'r') as f:
     config = yaml.load(f, Loader=yaml.Loader)
@@ -25,7 +27,7 @@ dag = DAG(
     dag_id='Streaming',
     default_args=default_args,
     description='test',
-    schedule="None",#@daily
+    schedule=None,#@daily
 )
 def get_data():
     res = requests.get(config['api'])
@@ -79,10 +81,21 @@ def stream_data():
             logging.error(f'An error occured: {e}')
             continue
 
-with TaskGroup(group_id="tasks", dag=dag) as group:
+def start_parallel_streams():
+    
+    kafka_thread = threading.Thread(target=stream_data)
+    cassandra_thread = threading.Thread(target=Streaming.write)
+
+    kafka_thread.start()
+    cassandra_thread.start()
+
+    kafka_thread.join()
+    cassandra_thread.join()
+    
+with TaskGroup(group_id="stream_data", dag=dag) as group:
     streaming_task = PythonOperator(
         task_id='stream_data_from_api',
-        python_callable=stream_data
+        python_callable=start_parallel_streams
     )
     
 #///////////////////
