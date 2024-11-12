@@ -28,6 +28,6 @@ class Streaming:
         pass
     
     def connCassandra():
-        cluster = Cluster['localhost']
+        cluster = Cluster(['localhost'])
         session = cluster.connect()
         pass
