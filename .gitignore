@@ -22,3 +22,4 @@ include/
 lib/
 lib64/
 .vscode/
+dags/streamdag/checkpoint
