@@ -69,7 +69,7 @@ def stream_data():
     # call api to get and stream data for 1 min
     curr_time = time.time()
     while True:
-        if time.time() > curr_time + 60: #1 minute
+        if time.time() > curr_time + 120: #1 minute
             logging.info("-----DONE-----")
             break
         try:
@@ -80,11 +80,12 @@ def stream_data():
         except Exception as e:
             logging.error(f'An error occured: {e}')
             continue
+        
 
 def start_parallel_streams():
-    
+    streaming = Streaming()
     kafka_thread = threading.Thread(target=stream_data)
-    cassandra_thread = threading.Thread(target=Streaming.write)
+    cassandra_thread = threading.Thread(target=streaming.write())
 
     kafka_thread.start()
     cassandra_thread.start()

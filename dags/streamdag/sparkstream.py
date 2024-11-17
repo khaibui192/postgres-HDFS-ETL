@@ -8,17 +8,24 @@ import datetime
 from dotenv import load_dotenv
 import logging 
 from cassandra.cluster import Cluster
-driver = """org.apache.spark:spark-sql-kafka-0-10_2.13:3.5.3,\
-com.datastax.spark:spark-cassandra-connector_2.13:3.5.1"""
+from cassandra.policies import RoundRobinPolicy
+
+driver = "com.datastax.spark:spark-cassandra-connector-assembly_2.12:3.5.1,"\
+    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,"\
+    "org.apache.spark:spark-streaming-kafka-0-10-assembly_2.12:3.5.1,"\
+    "org.apache.kafka:kafka-clients:3.5.1"
             
 spark = SparkSession.Builder().appName("Pyspark")\
     .config("spark.jars.packages", f"{driver}")\
-    .config("spark.executor.memory", "2g") \
-    .config("spark.driver.memory", "2g") \
+    .config("spark.executor.memory", "12g") \
+    .config("spark.driver.memory", "12g") \
     .config("spark.sql.shuffle.partitions", "8") \
     .config("spark.sql.files.maxPartitionBytes", "128MB")\
     .config("spark.executor.instances", "2")\
     .config('spark.cassandra.connection.host','localhost')\
+    .config('spark.cassandra.connection.port', '9042') \
+    .config('spark.cassandra.output.consistency.level','ONE') \
+    .config('spark.sql.streaming.checkpointLocation','/home/khai/airflow/dags/streamdag/checkpoint')\
     .getOrCreate()
 
 class Streaming:
@@ -45,6 +52,7 @@ class Streaming:
         kafka_df = spark.readStream \
             .format("kafka") \
             .option("kafka.bootstrap.servers", "localhost:9092") \
+            .option("failOnDataLoss", "false") \
             .option("subscribe", "users_created") \
             .option("startingOffsets", "earliest") \
             .load()
@@ -55,7 +63,7 @@ class Streaming:
         return parsed_df
     
     def create_cassandra_connection(self):
-        cluster = Cluster(['localhost'])
+        cluster = Cluster(['localhost'], load_balancing_policy=RoundRobinPolicy())
         session = cluster.connect()
         return session
     
@@ -88,7 +96,8 @@ class Streaming:
         self.create_table(session)
         parsed_df = self.readKafka()
         logging.info("running")
-        query = parsed_df.writeStream \
+        print("----------------------------------------------------------------")
+        query = parsed_df.writeStream.format("org.apache.spark.sql.cassandra")\
             .format("org.apache.spark.sql.cassandra") \
             .option("keyspace", "spark_streams") \
             .option("table", "created_users") \
