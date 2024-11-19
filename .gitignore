@@ -16,6 +16,9 @@ webserver_config.py
 # Virtual environment
 venv/
 
+#env
+dags/apidag/config/.env
+
 # Else
 bin/
 include/
